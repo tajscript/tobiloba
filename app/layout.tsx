@@ -1,10 +1,12 @@
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
 import { Merriweather } from "next/font/google";
 import "@/style/globals.css";
 import { createClient } from "@/prismicio";
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { data } from 'autoprefixer';
 
-const merri = Merriweather({
-  variable: "--font-merri",
+const merriweather = Merriweather({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
@@ -30,21 +32,20 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
-        className={`${merri.variable} antialiased`}
+        className={`${merriweather.className} antialiased`}
       >
-        <>
-        <header>I'm the head</header>
+        <Header />
         {children}
-        <footer>I'm the footer</footer>
-        </>
+        <Footer />
       </body>
     </html>
   );

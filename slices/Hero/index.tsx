@@ -16,8 +16,9 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
+      className="mx-auto max-w-[1536px] lg:px-20"
     >
-      <PrismicNextImage field={slice.primary.hero_image} />
+      <PrismicNextImage field={slice.primary.hero_image} className="object-cover h-[80vh] lg:h-[90vh] lg:object-top sm:mt-5 mx-auto"  />
     </section>
   );
 };
