@@ -4,7 +4,7 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type HomeDocumentDataSlicesSlice = HeroSlice;
+type HomeDocumentDataSlicesSlice = AboutSlice | HeroSlice;
 
 /**
  * Content for Home documents
@@ -144,6 +144,100 @@ export type SettingsDocument<Lang extends string = string> =
 export type AllDocumentTypes = HomeDocument | SettingsDocument;
 
 /**
+ * Primary content in *About → Default → Primary*
+ */
+export interface AboutSliceDefaultPrimary {
+  /**
+   * About Text field in *About → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The text below the main hero Image
+   * - **API ID Path**: about.default.primary.about_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  about_text: prismic.RichTextField;
+
+  /**
+   * About Link field in *About → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Learn more ink
+   * - **API ID Path**: about.default.primary.about_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  about_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Featured Image field in *About → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.default.primary.featured_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  featured_image: prismic.ImageField<never>;
+
+  /**
+   * Featured Text field in *About → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.default.primary.featured_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  featured_text: prismic.RichTextField;
+
+  /**
+   * Featured Link field in *About → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.default.primary.featured_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  featured_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+}
+
+/**
+ * Default variation for About Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AboutSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<AboutSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *About*
+ */
+type AboutSliceVariation = AboutSliceDefault;
+
+/**
+ * About Shared Slice
+ *
+ * - **API ID**: `about`
+ * - **Description**: About
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AboutSlice = prismic.SharedSlice<"about", AboutSliceVariation>;
+
+/**
  * Primary content in *Hero → Default → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -213,6 +307,10 @@ declare module "@prismicio/client" {
       SettingsDocumentData,
       SettingsDocumentDataSlicesSlice,
       AllDocumentTypes,
+      AboutSlice,
+      AboutSliceDefaultPrimary,
+      AboutSliceVariation,
+      AboutSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
