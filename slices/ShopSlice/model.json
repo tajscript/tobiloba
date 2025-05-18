@@ -1,0 +1,16 @@
+{
+  "id": "shop_slice",
+  "type": "SharedSlice",
+  "name": "ShopSlice",
+  "description": "ShopSlice",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": ""
+    }
+  ]
+}

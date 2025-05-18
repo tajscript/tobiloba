@@ -94,19 +94,19 @@ export default function Header() {
                     {paintingsDropdownOpen && (
                         <div className="absolute bg-white shadow-md py-3 px-4 z-10 min-w-40 flex flex-col gap-2">
                             <Link
-                                href="/paintings/narrative"
+                                href="/narrative"
                                 className="whitespace-nowrap hover:text-secondary transition-colors"
                             >
                                 Narrative paintings
                             </Link>
                             <Link
-                                href="/paintings/portraits"
+                                href="/portraits"
                                 className="whitespace-nowrap hover:text-secondary transition-colors"
                             >
                                 Portraits
                             </Link>
                             <Link
-                                href="/paintings/studies"
+                                href="/studies"
                                 className="whitespace-nowrap hover:text-secondary transition-colors"
                             >
                                 Studies
@@ -146,9 +146,9 @@ export default function Header() {
 
                         {mobilePaintingsOpen && (
                             <div className="flex flex-col gap-3 mt-3 items-center">
-                                <Link href="/paintings/narrative" onClick={handleLinkClick}>Narrative paintings</Link>
-                                <Link href="/paintings/portraits" onClick={handleLinkClick}>Portraits</Link>
-                                <Link href="/paintings/studies" onClick={handleLinkClick}>Studies</Link>
+                                <Link href="/narrative" onClick={handleLinkClick}>Narrative paintings</Link>
+                                <Link href="/portraits" onClick={handleLinkClick}>Portraits</Link>
+                                <Link href="/studies" onClick={handleLinkClick}>Studies</Link>
                             </div>
                         )}
                     </div>

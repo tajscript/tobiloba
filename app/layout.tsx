@@ -4,7 +4,6 @@ import "@/style/globals.css";
 import { createClient } from "@/prismicio";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { data } from 'autoprefixer';
 
 const merriweather = Merriweather({
   subsets: ["latin"],

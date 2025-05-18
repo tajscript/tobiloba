@@ -4,6 +4,67 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+type AboutDocumentDataSlicesSlice = AboutBodySlice;
+
+/**
+ * Content for About documents
+ */
+interface AboutDocumentData {
+  /**
+   * Slice Zone field in *About*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<AboutDocumentDataSlicesSlice> /**
+   * Meta Title field in *About*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: about.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *About*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: about.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *About*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * About document from Prismic
+ *
+ * - **API ID**: `about`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AboutDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
+
 type HomeDocumentDataSlicesSlice = AboutSlice | HeroSlice;
 
 /**
@@ -64,6 +125,136 @@ interface HomeDocumentData {
  */
 export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
+
+type NarrativeDocumentDataSlicesSlice = PaintingsSlice;
+
+/**
+ * Content for narrative documents
+ */
+interface NarrativeDocumentData {
+  /**
+   * Slice Zone field in *narrative*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: narrative.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<NarrativeDocumentDataSlicesSlice> /**
+   * Meta Title field in *narrative*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: narrative.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *narrative*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: narrative.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *narrative*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: narrative.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * narrative document from Prismic
+ *
+ * - **API ID**: `narrative`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NarrativeDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NarrativeDocumentData>,
+    "narrative",
+    Lang
+  >;
+
+type PotraitDocumentDataSlicesSlice = PaintingsSlice;
+
+/**
+ * Content for Potrait documents
+ */
+interface PotraitDocumentData {
+  /**
+   * Slice Zone field in *Potrait*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: potrait.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<PotraitDocumentDataSlicesSlice> /**
+   * Meta Title field in *Potrait*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: potrait.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Potrait*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: potrait.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Potrait*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: potrait.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Potrait document from Prismic
+ *
+ * - **API ID**: `potrait`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PotraitDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<PotraitDocumentData>,
+    "potrait",
+    Lang
+  >;
 
 type SettingsDocumentDataSlicesSlice = never;
 
@@ -141,7 +332,140 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
-export type AllDocumentTypes = HomeDocument | SettingsDocument;
+type ShopDocumentDataSlicesSlice = ShopSliceSlice;
+
+/**
+ * Content for Shop documents
+ */
+interface ShopDocumentData {
+  /**
+   * Slice Zone field in *Shop*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: shop.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<ShopDocumentDataSlicesSlice> /**
+   * Meta Title field in *Shop*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: shop.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Shop*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: shop.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Shop*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: shop.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Shop document from Prismic
+ *
+ * - **API ID**: `shop`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ShopDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<ShopDocumentData>, "shop", Lang>;
+
+type StudiesDocumentDataSlicesSlice = PaintingsSlice;
+
+/**
+ * Content for Studies documents
+ */
+interface StudiesDocumentData {
+  /**
+   * Slice Zone field in *Studies*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: studies.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<StudiesDocumentDataSlicesSlice> /**
+   * Meta Title field in *Studies*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: studies.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Studies*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: studies.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Studies*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: studies.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Studies document from Prismic
+ *
+ * - **API ID**: `studies`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type StudiesDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<StudiesDocumentData>,
+    "studies",
+    Lang
+  >;
+
+export type AllDocumentTypes =
+  | AboutDocument
+  | HomeDocument
+  | NarrativeDocument
+  | PotraitDocument
+  | SettingsDocument
+  | ShopDocument
+  | StudiesDocument;
 
 /**
  * Primary content in *About → Default → Primary*
@@ -238,6 +562,81 @@ type AboutSliceVariation = AboutSliceDefault;
 export type AboutSlice = prismic.SharedSlice<"about", AboutSliceVariation>;
 
 /**
+ * Primary content in *AboutBody → Default → Primary*
+ */
+export interface AboutBodySliceDefaultPrimary {
+  /**
+   * Title field in *AboutBody → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_body.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Featured Image field in *AboutBody → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_body.default.primary.featured_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  featured_image: prismic.ImageField<never>;
+
+  /**
+   * Featured Text field in *AboutBody → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_body.default.primary.featured_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  featured_text: prismic.RichTextField;
+
+  /**
+   * Text field in *AboutBody → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_body.default.primary.text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  text: prismic.RichTextField;
+}
+
+/**
+ * Default variation for AboutBody Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AboutBodySliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<AboutBodySliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *AboutBody*
+ */
+type AboutBodySliceVariation = AboutBodySliceDefault;
+
+/**
+ * AboutBody Shared Slice
+ *
+ * - **API ID**: `about_body`
+ * - **Description**: AboutBody
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AboutBodySlice = prismic.SharedSlice<
+  "about_body",
+  AboutBodySliceVariation
+>;
+
+/**
  * Primary content in *Hero → Default → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -279,6 +678,106 @@ type HeroSliceVariation = HeroSliceDefault;
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
+/**
+ * Item in *Paintings → Default → Primary → ImageFolder*
+ */
+export interface PaintingsSliceDefaultPrimaryImagesItem {
+  /**
+   * Image field in *Paintings → Default → Primary → ImageFolder*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: paintings.default.primary.images[].image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+}
+
+/**
+ * Primary content in *Paintings → Default → Primary*
+ */
+export interface PaintingsSliceDefaultPrimary {
+  /**
+   * Title field in *Paintings → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: paintings.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * ImageFolder field in *Paintings → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: paintings.default.primary.images[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  images: prismic.GroupField<Simplify<PaintingsSliceDefaultPrimaryImagesItem>>;
+}
+
+/**
+ * Default variation for Paintings Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type PaintingsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<PaintingsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Paintings*
+ */
+type PaintingsSliceVariation = PaintingsSliceDefault;
+
+/**
+ * Paintings Shared Slice
+ *
+ * - **API ID**: `paintings`
+ * - **Description**: Paintings
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type PaintingsSlice = prismic.SharedSlice<
+  "paintings",
+  PaintingsSliceVariation
+>;
+
+/**
+ * Default variation for ShopSlice Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ShopSliceSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *ShopSlice*
+ */
+type ShopSliceSliceVariation = ShopSliceSliceDefault;
+
+/**
+ * ShopSlice Shared Slice
+ *
+ * - **API ID**: `shop_slice`
+ * - **Description**: ShopSlice
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ShopSliceSlice = prismic.SharedSlice<
+  "shop_slice",
+  ShopSliceSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -300,21 +799,48 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      AboutDocument,
+      AboutDocumentData,
+      AboutDocumentDataSlicesSlice,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
+      NarrativeDocument,
+      NarrativeDocumentData,
+      NarrativeDocumentDataSlicesSlice,
+      PotraitDocument,
+      PotraitDocumentData,
+      PotraitDocumentDataSlicesSlice,
       SettingsDocument,
       SettingsDocumentData,
       SettingsDocumentDataSlicesSlice,
+      ShopDocument,
+      ShopDocumentData,
+      ShopDocumentDataSlicesSlice,
+      StudiesDocument,
+      StudiesDocumentData,
+      StudiesDocumentDataSlicesSlice,
       AllDocumentTypes,
       AboutSlice,
       AboutSliceDefaultPrimary,
       AboutSliceVariation,
       AboutSliceDefault,
+      AboutBodySlice,
+      AboutBodySliceDefaultPrimary,
+      AboutBodySliceVariation,
+      AboutBodySliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      PaintingsSlice,
+      PaintingsSliceDefaultPrimaryImagesItem,
+      PaintingsSliceDefaultPrimary,
+      PaintingsSliceVariation,
+      PaintingsSliceDefault,
+      ShopSliceSlice,
+      ShopSliceSliceVariation,
+      ShopSliceSliceDefault,
     };
   }
 }
