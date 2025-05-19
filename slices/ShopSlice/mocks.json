@@ -2,7 +2,44 @@
 	{
 		"__TYPE__": "SharedSliceContent",
 		"variation": "default",
-		"primary": {},
+		"primary": {
+			"repeatable_art": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"arts",
+								{
+									"key": "e1a85af3-6ba3-4940-8ec1-92ec737d68b4",
+									"__TYPE__": "LinkContent",
+									"value": {
+										"__TYPE__": "DocumentLink",
+										"id": "mock_document_id"
+									}
+								}
+							]
+						]
+					}
+				]
+			},
+			"all": {
+				"__TYPE__": "FieldContent",
+				"value": "title",
+				"type": "Text"
+			},
+			"original": {
+				"__TYPE__": "FieldContent",
+				"value": "size",
+				"type": "Text"
+			},
+			"print": {
+				"__TYPE__": "FieldContent",
+				"value": "arrive",
+				"type": "Text"
+			}
+		},
 		"items": []
 	}
 ]

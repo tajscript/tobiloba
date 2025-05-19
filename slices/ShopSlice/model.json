@@ -10,7 +10,51 @@
       "docURL": "...",
       "version": "initial",
       "description": "Default",
-      "imageUrl": ""
+      "imageUrl": "",
+      "primary": {
+        "all": {
+          "type": "Text",
+          "config": {
+            "label": "All",
+            "placeholder": ""
+          }
+        },
+        "original": {
+          "type": "Text",
+          "config": {
+            "label": "Original",
+            "placeholder": ""
+          }
+        },
+        "print": {
+          "type": "Text",
+          "config": {
+            "label": "Print",
+            "placeholder": ""
+          }
+        },
+        "repeatable_art": {
+          "type": "Group",
+          "config": {
+            "label": "Repeatable Art",
+            "repeat": true,
+            "fields": {
+              "arts": {
+                "type": "Link",
+                "config": {
+                  "label": "Arts",
+                  "select": "document",
+                  "repeat": false,
+                  "customtypes": [
+                    "featured_arts"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
     }
   ]
 }

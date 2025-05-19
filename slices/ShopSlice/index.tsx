@@ -1,50 +1,101 @@
-import { FC } from "react";
-import { Content } from "@prismicio/client";
-import { SliceComponentProps } from "@prismicio/react";
+"use client"
+
+import { FC, useEffect, useState } from "react";
+import { Content, isFilled } from "@prismicio/client";
+import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
+import { createClient } from "@/prismicio";
+import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
+import Link from "next/link";
 
 /**
  * Props for `ShopSlice`.
  */
 export type ShopSliceProps = SliceComponentProps<Content.ShopSliceSlice>;
 
-/**
- * Component for "ShopSlice" Slices.
- */
+export function generateSlug(text: string) {
+  return text.toString().toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .trim();
+}
+
 const ShopSlice: FC<ShopSliceProps> = ({ slice }) => {
+
+  console.log("slice items", slice.primary.repeatable_art)
+
+  const [products, setProducts] = useState<any[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const client = createClient();
+
+      const fetchedProducts = await Promise.all(
+        slice.primary.repeatable_art.map(async (item) => {
+          if (
+            isFilled.contentRelationship(item.arts) && item.arts.uid
+          ) {
+            const productData = await client.getByUID("featured_arts", item.arts.uid)
+            const slug = generateSlug(productData.uid)
+            return { ...productData, slug }
+          }
+        })
+      );
+      setFilteredProducts(fetchedProducts);
+      setProducts(fetchedProducts);
+    }
+    fetchProducts();
+  }, [])
+
+  // Filter Product according to Art type
+  const filterProduct = (type: string) => {
+
+    if (type === "all") {
+      setFilteredProducts(products)
+    } else if (type === "original") {
+      setFilteredProducts(products.filter((product) => product?.data.art_type === "ORIGINAL"))
+    } else if (type === "print") {
+      setFilteredProducts(products.filter((product) => product?.data.art_type === "PRINT"))
+    }
+  }
+
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
+      className="bg-primary text-background px-5 pt-10 pb-20 mx-auto sm:px-10 lg:px-20"
     >
-      Placeholder component for shop_slice (variation: {slice.variation})
-      slices.
-      <br />
-      <strong>You can edit this slice directly in your code editor.</strong>
-      {/**
-       * 💡 Use Prismic MCP with your code editor
-       *
-       * Get AI-powered help to build your slice components — based on your actual model.
-       *
-       * ▶️ Setup:
-       * 1. Add a new MCP Server in your code editor:
-       *
-       * {
-       *   "mcpServers": {
-       *     "Prismic MCP": {
-       *       "command": "npx",
-       *       "args": ["-y", "@prismicio/mcp-server"]
-       *     }
-       *   }
-       * }
-       *
-       * 2. Select Claude 3.7 Sonnet (recommended for optimal output)
-       *
-       * ✅ Then open your slice file and ask your code editor:
-       *    "Code this slice"
-       *
-       * Your code editor reads your slice model and helps you code faster ⚡
-       * 📚 Give your feedback: https://community.prismic.io/t/help-us-shape-the-future-of-slice-creation/19505
-       */}
+      <div className="flex flex-col items-center max-w-[1563px] mx-auto">
+      <div className="space-x-5 flex">
+        <button onClick={() => filterProduct("all")} className="transition-all duration-500 ease-in-out hover:underline cursor-pointer">
+          {slice.primary.all}
+        </button>
+        <div className="h-5 w-[2px] bg-background" />
+        <button onClick={() => filterProduct("original")} className="transition-all duration-500 ease-in-out hover:underline cursor-pointer">
+          {slice.primary.original}
+        </button>
+        <div className="h-5 w-[2px] bg-background" />
+        <button onClick={() => filterProduct("print")} className="transition-all duration-500 ease-in-out hover:underline cursor-pointer">
+          {slice.primary.print}
+        </button>
+      </div>
+
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-10">
+        {filteredProducts.map((item, index) => (
+          <div key={index}>
+            <Link href={`/shop/${item.slug}`} className="flex flex-col items-center gap-1">
+              <div className="w-full overflow-hidden sm:w-96 sm:h-96">
+                <PrismicNextImage field={item.data.image} className="" />
+              </div>
+
+              <div className="text-secondary sm:text-lg"><PrismicRichText field={item.data.title} /></div>
+              <div>{item.data.amount}</div>
+            </Link>
+          </div>
+        ))}
+      </div>
+      </div>
+
     </section>
   );
 };

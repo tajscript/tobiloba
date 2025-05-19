@@ -1,7 +1,7 @@
 {
   "id": "about",
   "type": "SharedSlice",
-  "name": "About",
+  "name": "AboutSlice",
   "description": "About",
   "variations": [
     {

@@ -16,8 +16,9 @@ const Paintings: FC<PaintingsProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="bg-primary pb-20 text-background px-5 sm:px-10 lg:px-20"
+      className="bg-primary pb-20 text-background"
     >
+      <div className="max-w-[1563px] mx-auto px-5 sm:px-10 lg:px-20">
       <h1 className="text-center py-10 text-xl font-semibold sm:text-2xl"><PrismicRichText field={slice.primary.title} /></h1>
 
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
@@ -31,6 +32,7 @@ const Paintings: FC<PaintingsProps> = ({ slice }) => {
             )}
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

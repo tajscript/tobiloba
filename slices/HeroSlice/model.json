@@ -1,7 +1,7 @@
 {
   "id": "hero",
   "type": "SharedSlice",
-  "name": "Hero",
+  "name": "HeroSlice",
   "description": "Hero",
   "variations": [
     {

@@ -1,7 +1,7 @@
 {
   "id": "paintings",
   "type": "SharedSlice",
-  "name": "Paintings",
+  "name": "PaintingSlice",
   "description": "Paintings",
   "variations": [
     {

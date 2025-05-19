@@ -65,6 +65,105 @@ interface AboutDocumentData {
 export type AboutDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
 
+/**
+ * Content for Featured Arts documents
+ */
+interface FeaturedArtsDocumentData {
+  /**
+   * Title field in *Featured Arts*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Image field in *Featured Arts*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Amount field in *Featured Arts*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.amount
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  amount: prismic.KeyTextField;
+
+  /**
+   * Description field in *Featured Arts*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Size field in *Featured Arts*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.size
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  size: prismic.KeyTextField;
+
+  /**
+   * Sold Out field in *Featured Arts*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: featured_arts.sold_out
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  sold_out: prismic.BooleanField;
+
+  /**
+   * Art Type field in *Featured Arts*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.art_type
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  art_type: prismic.SelectField<"ORIGINAL" | "PRINT">;
+}
+
+/**
+ * Featured Arts document from Prismic
+ *
+ * - **API ID**: `featured_arts`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FeaturedArtsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<FeaturedArtsDocumentData>,
+    "featured_arts",
+    Lang
+  >;
+
 type HomeDocumentDataSlicesSlice = AboutSlice | HeroSlice;
 
 /**
@@ -460,6 +559,7 @@ export type StudiesDocument<Lang extends string = string> =
 
 export type AllDocumentTypes =
   | AboutDocument
+  | FeaturedArtsDocument
   | HomeDocument
   | NarrativeDocument
   | PotraitDocument
@@ -468,11 +568,11 @@ export type AllDocumentTypes =
   | StudiesDocument;
 
 /**
- * Primary content in *About → Default → Primary*
+ * Primary content in *AboutSlice → Default → Primary*
  */
 export interface AboutSliceDefaultPrimary {
   /**
-   * About Text field in *About → Default → Primary*
+   * About Text field in *AboutSlice → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: The text below the main hero Image
@@ -482,7 +582,7 @@ export interface AboutSliceDefaultPrimary {
   about_text: prismic.RichTextField;
 
   /**
-   * About Link field in *About → Default → Primary*
+   * About Link field in *AboutSlice → Default → Primary*
    *
    * - **Field Type**: Link
    * - **Placeholder**: Learn more ink
@@ -498,7 +598,7 @@ export interface AboutSliceDefaultPrimary {
   >;
 
   /**
-   * Featured Image field in *About → Default → Primary*
+   * Featured Image field in *AboutSlice → Default → Primary*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -508,7 +608,7 @@ export interface AboutSliceDefaultPrimary {
   featured_image: prismic.ImageField<never>;
 
   /**
-   * Featured Text field in *About → Default → Primary*
+   * Featured Text field in *AboutSlice → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
@@ -518,7 +618,7 @@ export interface AboutSliceDefaultPrimary {
   featured_text: prismic.RichTextField;
 
   /**
-   * Featured Link field in *About → Default → Primary*
+   * Featured Link field in *AboutSlice → Default → Primary*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
@@ -535,7 +635,7 @@ export interface AboutSliceDefaultPrimary {
 }
 
 /**
- * Default variation for About Slice
+ * Default variation for AboutSlice Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
@@ -548,12 +648,12 @@ export type AboutSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
- * Slice variation for *About*
+ * Slice variation for *AboutSlice*
  */
 type AboutSliceVariation = AboutSliceDefault;
 
 /**
- * About Shared Slice
+ * AboutSlice Shared Slice
  *
  * - **API ID**: `about`
  * - **Description**: About
@@ -562,11 +662,11 @@ type AboutSliceVariation = AboutSliceDefault;
 export type AboutSlice = prismic.SharedSlice<"about", AboutSliceVariation>;
 
 /**
- * Primary content in *AboutBody → Default → Primary*
+ * Primary content in *HomeSlice → Default → Primary*
  */
 export interface AboutBodySliceDefaultPrimary {
   /**
-   * Title field in *AboutBody → Default → Primary*
+   * Title field in *HomeSlice → Default → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
@@ -576,7 +676,7 @@ export interface AboutBodySliceDefaultPrimary {
   title: prismic.KeyTextField;
 
   /**
-   * Featured Image field in *AboutBody → Default → Primary*
+   * Featured Image field in *HomeSlice → Default → Primary*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -586,7 +686,7 @@ export interface AboutBodySliceDefaultPrimary {
   featured_image: prismic.ImageField<never>;
 
   /**
-   * Featured Text field in *AboutBody → Default → Primary*
+   * Featured Text field in *HomeSlice → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
@@ -596,7 +696,7 @@ export interface AboutBodySliceDefaultPrimary {
   featured_text: prismic.RichTextField;
 
   /**
-   * Text field in *AboutBody → Default → Primary*
+   * Text field in *HomeSlice → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
@@ -607,7 +707,7 @@ export interface AboutBodySliceDefaultPrimary {
 }
 
 /**
- * Default variation for AboutBody Slice
+ * Default variation for HomeSlice Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
@@ -620,12 +720,12 @@ export type AboutBodySliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
- * Slice variation for *AboutBody*
+ * Slice variation for *HomeSlice*
  */
 type AboutBodySliceVariation = AboutBodySliceDefault;
 
 /**
- * AboutBody Shared Slice
+ * HomeSlice Shared Slice
  *
  * - **API ID**: `about_body`
  * - **Description**: AboutBody
@@ -637,11 +737,11 @@ export type AboutBodySlice = prismic.SharedSlice<
 >;
 
 /**
- * Primary content in *Hero → Default → Primary*
+ * Primary content in *HeroSlice → Default → Primary*
  */
 export interface HeroSliceDefaultPrimary {
   /**
-   * Hero Image field in *Hero → Default → Primary*
+   * Hero Image field in *HeroSlice → Default → Primary*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -652,7 +752,7 @@ export interface HeroSliceDefaultPrimary {
 }
 
 /**
- * Default variation for Hero Slice
+ * Default variation for HeroSlice Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
@@ -665,12 +765,12 @@ export type HeroSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
- * Slice variation for *Hero*
+ * Slice variation for *HeroSlice*
  */
 type HeroSliceVariation = HeroSliceDefault;
 
 /**
- * Hero Shared Slice
+ * HeroSlice Shared Slice
  *
  * - **API ID**: `hero`
  * - **Description**: Hero
@@ -679,11 +779,11 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
- * Item in *Paintings → Default → Primary → ImageFolder*
+ * Item in *PaintingSlice → Default → Primary → ImageFolder*
  */
 export interface PaintingsSliceDefaultPrimaryImagesItem {
   /**
-   * Image field in *Paintings → Default → Primary → ImageFolder*
+   * Image field in *PaintingSlice → Default → Primary → ImageFolder*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -694,11 +794,11 @@ export interface PaintingsSliceDefaultPrimaryImagesItem {
 }
 
 /**
- * Primary content in *Paintings → Default → Primary*
+ * Primary content in *PaintingSlice → Default → Primary*
  */
 export interface PaintingsSliceDefaultPrimary {
   /**
-   * Title field in *Paintings → Default → Primary*
+   * Title field in *PaintingSlice → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
@@ -708,7 +808,7 @@ export interface PaintingsSliceDefaultPrimary {
   title: prismic.RichTextField;
 
   /**
-   * ImageFolder field in *Paintings → Default → Primary*
+   * ImageFolder field in *PaintingSlice → Default → Primary*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
@@ -719,7 +819,7 @@ export interface PaintingsSliceDefaultPrimary {
 }
 
 /**
- * Default variation for Paintings Slice
+ * Default variation for PaintingSlice Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
@@ -732,12 +832,12 @@ export type PaintingsSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
- * Slice variation for *Paintings*
+ * Slice variation for *PaintingSlice*
  */
 type PaintingsSliceVariation = PaintingsSliceDefault;
 
 /**
- * Paintings Shared Slice
+ * PaintingSlice Shared Slice
  *
  * - **API ID**: `paintings`
  * - **Description**: Paintings
@@ -749,6 +849,68 @@ export type PaintingsSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Item in *ShopSlice → Default → Primary → Repeatable Art*
+ */
+export interface ShopSliceSliceDefaultPrimaryRepeatableArtItem {
+  /**
+   * Arts field in *ShopSlice → Default → Primary → Repeatable Art*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: shop_slice.default.primary.repeatable_art[].arts
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  arts: prismic.ContentRelationshipField<"featured_arts">;
+}
+
+/**
+ * Primary content in *ShopSlice → Default → Primary*
+ */
+export interface ShopSliceSliceDefaultPrimary {
+  /**
+   * All field in *ShopSlice → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: shop_slice.default.primary.all
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  all: prismic.KeyTextField;
+
+  /**
+   * Original field in *ShopSlice → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: shop_slice.default.primary.original
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  original: prismic.KeyTextField;
+
+  /**
+   * Print field in *ShopSlice → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: shop_slice.default.primary.print
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  print: prismic.KeyTextField;
+
+  /**
+   * Repeatable Art field in *ShopSlice → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: shop_slice.default.primary.repeatable_art[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  repeatable_art: prismic.GroupField<
+    Simplify<ShopSliceSliceDefaultPrimaryRepeatableArtItem>
+  >;
+}
+
+/**
  * Default variation for ShopSlice Slice
  *
  * - **API ID**: `default`
@@ -757,7 +919,7 @@ export type PaintingsSlice = prismic.SharedSlice<
  */
 export type ShopSliceSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
+  Simplify<ShopSliceSliceDefaultPrimary>,
   never
 >;
 
@@ -802,6 +964,8 @@ declare module "@prismicio/client" {
       AboutDocument,
       AboutDocumentData,
       AboutDocumentDataSlicesSlice,
+      FeaturedArtsDocument,
+      FeaturedArtsDocumentData,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
@@ -839,6 +1003,8 @@ declare module "@prismicio/client" {
       PaintingsSliceVariation,
       PaintingsSliceDefault,
       ShopSliceSlice,
+      ShopSliceSliceDefaultPrimaryRepeatableArtItem,
+      ShopSliceSliceDefaultPrimary,
       ShopSliceSliceVariation,
       ShopSliceSliceDefault,
     };
