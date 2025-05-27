@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { AlignLeft, X, ShoppingCart, ChevronDown, Instagram, Twitter, Mail } from 'lucide-react';
+import CartIcon from '@/components/CartIcon';
 import logoPng from "@/public/asset/logo.png"
 import Image from 'next/image';
 
@@ -68,8 +69,7 @@ export default function Header() {
                 </Link>
 
                 <button className="flex flex-row items-center gap-2 text-primary">
-                    <div className="sm:text-lg"><ShoppingCart /></div>
-                    <span>{0}</span>
+                    <CartIcon className="text-white" size={24} />
                 </button>
             </div>
 
