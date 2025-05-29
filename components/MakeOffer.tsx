@@ -37,19 +37,19 @@ const MakeOfferModal: FC<MakeOfferModalProps> = ({ isOpen, onClose, artTitle, ar
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-[90%] max-w-md relative text-black">
+      <div className="bg-background rounded-lg p-6 w-[90%] max-w-md relative text-[#7B7878]">
         <button onClick={onClose} className="absolute top-2 right-4 text-xl font-bold">
           ×
         </button>
 
-        <h2 className="text-xl font-semibold mb-2">Make Tobi an offer</h2>
+        <h2 className="text-3xl font-montaga mb-2 uppercase">Make Tobi an <br /> offer</h2>
 
-        <div className="mb-4">
+        <div className="mb-6 text-sm font-gentiumPlus">
           <p className="font-medium">{artTitle}</p>
           <p className="text-sm text-gray-600">Price: ${artPrice.toLocaleString()}</p>
         </div>
 
-        <form className="space-y-3">
+        <form className="space-y-5">
           <input
             type="number"
             name="offer"
@@ -57,7 +57,7 @@ const MakeOfferModal: FC<MakeOfferModalProps> = ({ isOpen, onClose, artTitle, ar
             required
             value={form.offer}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[#D2C4C4] bg-background shadow-sm px-3 py-2 rounded focus:outline-none"
           />
           <input
             type="email"
@@ -66,14 +66,14 @@ const MakeOfferModal: FC<MakeOfferModalProps> = ({ isOpen, onClose, artTitle, ar
             required
             value={form.email}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[#D2C4C4] bg-background shadow-sm px-3 py-2 rounded focus:outline-none"
           />
           <select
             name="country"
             required
             value={form.country}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[#D2C4C4] bg-background shadow-sm px-3 py-2 rounded focus:outline-none"
           >
             <option value="">Select Country</option>
             <option value="US">United States</option>
@@ -85,7 +85,7 @@ const MakeOfferModal: FC<MakeOfferModalProps> = ({ isOpen, onClose, artTitle, ar
             required
             value={form.region}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[#D2C4C4] bg-background shadow-sm px-3 py-2 rounded"
           >
             <option value="">Select Region</option>
             {regionOptions.map((region) => (
@@ -97,7 +97,7 @@ const MakeOfferModal: FC<MakeOfferModalProps> = ({ isOpen, onClose, artTitle, ar
 
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded mt-2"
+            className="w-full bg-primary text-background py-2 rounded mt-2"
             onClick={(e) => {
               e.preventDefault();
               // Submit logic here
