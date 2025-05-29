@@ -66,6 +66,31 @@ export type AboutDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
 
 /**
+ * Item in *Featured Arts → Print_Options*
+ */
+export interface FeaturedArtsDocumentDataPrintOptionsItem {
+  /**
+   * Print_Size field in *Featured Arts → Print_Options*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.print_options[].print_size
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  print_size: prismic.RichTextField;
+
+  /**
+   * Print_Price field in *Featured Arts → Print_Options*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.print_options[].print_price
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  print_price: prismic.NumberField;
+}
+
+/**
  * Content for Featured Arts documents
  */
 interface FeaturedArtsDocumentData {
@@ -81,6 +106,17 @@ interface FeaturedArtsDocumentData {
   title: prismic.RichTextField;
 
   /**
+   * Amount field in *Featured Arts*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.amount
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  amount: prismic.NumberField;
+
+  /**
    * Image field in *Featured Arts*
    *
    * - **Field Type**: Image
@@ -90,17 +126,6 @@ interface FeaturedArtsDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   image: prismic.ImageField<never>;
-
-  /**
-   * Amount field in *Featured Arts*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_arts.amount
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  amount: prismic.KeyTextField;
 
   /**
    * Description field in *Featured Arts*
@@ -146,6 +171,30 @@ interface FeaturedArtsDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#select
    */
   art_type: prismic.SelectField<"ORIGINAL" | "PRINT">;
+
+  /**
+   * Print_Options field in *Featured Arts*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.print_options[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  print_options: prismic.GroupField<
+    Simplify<FeaturedArtsDocumentDataPrintOptionsItem>
+  >;
+
+  /**
+   * Paint_Type field in *Featured Arts*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: featured_arts.paint_type
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  paint_type: prismic.SelectField<"Narratives" | "Portraits" | "Studies">;
 }
 
 /**
@@ -779,18 +828,18 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
- * Item in *PaintingSlice → Default → Primary → ImageFolder*
+ * Item in *PaintingSlice → Default → Primary → Art_details*
  */
-export interface PaintingsSliceDefaultPrimaryImagesItem {
+export interface PaintingsSliceDefaultPrimaryArtDetailsItem {
   /**
-   * Image field in *PaintingSlice → Default → Primary → ImageFolder*
+   * Paintings field in *PaintingSlice → Default → Primary → Art_details*
    *
-   * - **Field Type**: Image
+   * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
-   * - **API ID Path**: paintings.default.primary.images[].image
-   * - **Documentation**: https://prismic.io/docs/field#image
+   * - **API ID Path**: paintings.default.primary.art_details[].paintings
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  image: prismic.ImageField<never>;
+  paintings: prismic.ContentRelationshipField<"featured_arts">;
 }
 
 /**
@@ -808,14 +857,16 @@ export interface PaintingsSliceDefaultPrimary {
   title: prismic.RichTextField;
 
   /**
-   * ImageFolder field in *PaintingSlice → Default → Primary*
+   * Art_details field in *PaintingSlice → Default → Primary*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: paintings.default.primary.images[]
+   * - **API ID Path**: paintings.default.primary.art_details[]
    * - **Documentation**: https://prismic.io/docs/field#group
    */
-  images: prismic.GroupField<Simplify<PaintingsSliceDefaultPrimaryImagesItem>>;
+  art_details: prismic.GroupField<
+    Simplify<PaintingsSliceDefaultPrimaryArtDetailsItem>
+  >;
 }
 
 /**
@@ -966,6 +1017,7 @@ declare module "@prismicio/client" {
       AboutDocumentDataSlicesSlice,
       FeaturedArtsDocument,
       FeaturedArtsDocumentData,
+      FeaturedArtsDocumentDataPrintOptionsItem,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
@@ -998,7 +1050,7 @@ declare module "@prismicio/client" {
       HeroSliceVariation,
       HeroSliceDefault,
       PaintingsSlice,
-      PaintingsSliceDefaultPrimaryImagesItem,
+      PaintingsSliceDefaultPrimaryArtDetailsItem,
       PaintingsSliceDefaultPrimary,
       PaintingsSliceVariation,
       PaintingsSliceDefault,
