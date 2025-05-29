@@ -9,6 +9,7 @@
   --color-footer: #626161;
 
   --font-merri: 'Merriweather', serif;
+  --font-montaga: 'Montaga', serif;
 }
 
 @layer base {
@@ -19,4 +20,8 @@
 
 body {
   @apply bg-background text-primary;
+}
+
+button {
+  @apply cursor-pointer
 }
