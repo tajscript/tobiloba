@@ -1,13 +1,20 @@
 import type { Metadata } from 'next'
-import { Merriweather } from "next/font/google";
+import { Merriweather, Montaga } from "next/font/google";
 import "@/style/globals.css";
 import { createClient } from "@/prismicio";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { CartProvider } from '@/contexts/cartContext';
+
 
 const merriweather = Merriweather({
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+const montaga = Montaga({
+  subsets: ["latin"],
+  weight: '400'
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -40,11 +47,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${merriweather.className} antialiased`}
+        className={`${merriweather.className} ${montaga.className} antialiased`}
       >
+        <CartProvider>
         <Header />
         {children}
         <Footer />
+        </CartProvider>
       </body>
     </html>
   );
