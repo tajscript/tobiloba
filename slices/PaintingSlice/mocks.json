@@ -14,36 +14,21 @@
 					}
 				]
 			},
-			"images": {
+			"art_details": {
 				"__TYPE__": "GroupContentType",
 				"value": [
 					{
 						"__TYPE__": "GroupItemContent",
 						"value": [
 							[
-								"image",
+								"paintings",
 								{
-									"origin": {
-										"id": "main",
-										"url": "https://images.unsplash.com/photo-1531771686035-25f47595c87a",
-										"width": 3024,
-										"height": 3778
-									},
-									"url": "https://images.unsplash.com/photo-1531771686035-25f47595c87a",
-									"width": 3024,
-									"height": 3778,
-									"edit": {
-										"zoom": 1,
-										"crop": {
-											"x": 0,
-											"y": 0
-										},
-										"background": "transparent"
-									},
-									"alt": "prove",
-									"credits": null,
-									"__TYPE__": "ImageContent",
-									"thumbnails": {}
+									"__TYPE__": "LinkContent",
+									"key": "6d476110-9b8d-40c2-b4f5-ba7b46c49e11",
+									"value": {
+										"__TYPE__": "DocumentLink",
+										"id": "mock_document_id"
+									}
 								}
 							]
 						]

@@ -21,18 +21,21 @@
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
           }
         },
-        "images": {
+        "art_details": {
           "type": "Group",
           "config": {
-            "label": "ImageFolder",
+            "label": "Art_details",
             "repeat": true,
             "fields": {
-              "image": {
-                "type": "Image",
+              "paintings": {
+                "type": "Link",
                 "config": {
-                  "label": "Image",
-                  "constraint": {},
-                  "thumbnails": []
+                  "label": "Paintings",
+                  "select": "document",
+                  "repeat": false,
+                  "customtypes": [
+                    "featured_arts"
+                  ]
                 }
               }
             }
