@@ -389,7 +389,7 @@ const CheckoutForm: React.FC = () => {
                       <p className="text-sm">Qty: {item.quantity}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium">₦{(item.price * item.quantity).toLocaleString()}</p>
+                      <p className="font-medium">${(item.price * item.quantity).toLocaleString()}</p>
                     </div>
                   </div>
                 ))}
@@ -399,15 +399,15 @@ const CheckoutForm: React.FC = () => {
               <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span>₦{totalPrice.toLocaleString()}</span>
+                  <span>${totalPrice.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping:</span>
-                  <span className="text-green-600">Free</span>
+                  <span className="text-secondary">Check you email</span>
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t pt-2">
                   <span>Total:</span>
-                  <span>₦{totalPrice.toLocaleString()}</span>
+                  <span>${totalPrice.toLocaleString()}</span>
                 </div>
               </div>
             </div>
