@@ -21,19 +21,19 @@
           "label": "UID"
         }
       },
+      "amount": {
+        "type": "Number",
+        "config": {
+          "label": "Amount",
+          "placeholder": ""
+        }
+      },
       "image": {
         "type": "Image",
         "config": {
           "label": "Image",
           "constraint": {},
           "thumbnails": []
-        }
-      },
-      "amount": {
-        "type": "Text",
-        "config": {
-          "label": "Amount",
-          "placeholder": ""
         }
       },
       "description": {
@@ -67,6 +67,39 @@
           "label": "Art Type",
           "placeholder": "",
           "options": ["ORIGINAL", "PRINT"]
+        }
+      },
+      "print_options": {
+        "type": "Group",
+        "config": {
+          "label": "Print_Options",
+          "repeat": true,
+          "fields": {
+            "print_size": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Print_Size",
+                "placeholder": "",
+                "allowTargetBlank": true,
+                "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+              }
+            },
+            "print_price": {
+              "type": "Number",
+              "config": {
+                "label": "Print_Price",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
+      "paint_type": {
+        "type": "Select",
+        "config": {
+          "label": "Paint_Type",
+          "placeholder": "",
+          "options": ["Narratives", "Portraits", "Studies"]
         }
       }
     }
