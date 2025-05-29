@@ -7,9 +7,9 @@ import { createClient } from "@/prismicio";
 import { PrismicNextImage } from "@prismicio/next";
 import { PrismicRichText } from "@prismicio/react";
 import { useCart } from '@/contexts/cartContext';
+import MakeOfferModal from '@/components/MakeOffer';
 
 const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
-    // Unwrap the params Promise using React.use()
     const { slug } = use(params);
 
     const [product, setProduct] = useState<any>(null);
@@ -18,8 +18,9 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
     const [quantity, setQuantity] = useState<number>(1);
     const [isAdding, setIsAdding] = useState<boolean>(false);
     const [justAdded, setJustAdded] = useState<boolean>(false);
+    const [showOfferModal, setShowOfferModal] = useState<boolean>(false);
 
-    const { addToCart } = useCart();
+    const { addToCart, updateQuantity, items } = useCart();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +35,12 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
 
     const data = product.data;
     const isPrint = data.art_type === "PRINT";
+    const isOriginal = data.art_type === "ORIGINAL";
     const isSoldOut = data.sold_out;
+
+    const isOriginalInCart = isOriginal && items.some(
+        (item) => item.id === product.id && item.type === "ORIGINAL"
+    );
 
     const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = data.print_options.find(
@@ -53,29 +59,25 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
         setIsAdding(true);
 
         try {
-            // For multiple quantities, add each item individually
-            for (let i = 0; i < quantity; i++) {
-                const cartItem = {
-                    id: product.id,
-                    title: data.title[0]?.text || 'Untitled',
-                    price: isPrint ? selectedPrice : data.amount,
-                    image: data.image.url || '',
-                    size: isPrint ? selectedSize : data.size,
-                    type: data.art_type as "PRINT" | "ORIGINAL",
-                    slug: slug,
-                };
+            const cartItem = {
+                id: product.id,
+                title: data.title[0]?.text || 'Untitled',
+                price: isPrint ? selectedPrice : data.amount,
+                image: data.image.url || '',
+                size: isPrint ? selectedSize : data.size,
+                type: data.art_type as "PRINT" | "ORIGINAL",
+                slug: slug,
+            };
 
-                addToCart(cartItem);
+            addToCart(cartItem);
+            if (quantity > 1) {
+                updateQuantity(product.id, quantity, isPrint ? (selectedSize ?? undefined) : undefined);
             }
 
-            // Show success feedback
             setJustAdded(true);
             setTimeout(() => setJustAdded(false), 2000);
 
-            // Reset quantity for prints
-            if (isPrint) {
-                setQuantity(1);
-            }
+            if (isPrint) setQuantity(1);
         } catch (error) {
             console.error('Error adding to cart:', error);
             alert('Error adding item to cart. Please try again.');
@@ -84,19 +86,21 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
         }
     };
 
+    const handleMakeOffer = () => {
+        setShowOfferModal(true);
+    };
+
     const totalPrice = isPrint ? selectedPrice * quantity : data.amount;
 
     return (
         <div className="min-h-[70vh] bg-primary text-background">
             <div className="max-w-[1563px] mx-auto px-5 py-5 sm:p-10 lg:px-20">
-                {/* Breadcrumb */}
                 <div className="flex items-center gap-1 text-sm sm:text-base mb-5">
                     <Link href="/shop" className="text-secondary hover:underline">Shop</Link>
                     <ChevronRight />
                     <span>{data.title[0]?.text}</span>
                 </div>
 
-                {/* Art Image and Info */}
                 <div className="grid grid-cols-1 items-center md:grid-cols-2 gap-10">
                     <div>
                         <PrismicNextImage field={data.image} className="w-full object-cover rounded-2xl" />
@@ -149,34 +153,51 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
                         )}
 
                         {/* Cart Button */}
-                        <div className="mt-5 space-y-3">
+                        <div className="mt-5 space-y-3 w-full flex flex-col items-center justify-center">
                             {isSoldOut ? (
-                                <div className="text-red-500 font-semibold text-lg">Sold Out</div>
+                                <div className="text-red-500 font-semibold text-lg text-center">Sold Out</div>
                             ) : (
-                                <button
-                                    onClick={handleAddToCart}
-                                    disabled={isAdding || (isPrint && !selectedSize)}
-                                    className={`w-full flex items-center justify-center gap-2 py-2 px-6 font-semibold transition-color rounded-full ease-in-out duration-300 cursor-pointer ${justAdded
-                                        ? 'bg-secondary text-primary'
-                                        : isAdding || (isPrint && !selectedSize)
-                                            ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                                            : 'bg-transparent border border-secondary text-secondary hover:bg-secondary hover:text-primary'
+                                <>
+                                    <button
+                                        onClick={handleAddToCart}
+                                        disabled={
+                                            isAdding ||
+                                            (isPrint && !selectedSize) ||
+                                            isOriginalInCart
+                                        }
+                                        className={`flex items-center justify-center gap-2 py-2 px-6 font-semibold transition-color rounded-full ease-in-out duration-300 cursor-pointer ${
+                                            isOriginalInCart
+                                                ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                                : justAdded
+                                                ? 'bg-secondary text-primary'
+                                                : isAdding || (isPrint && !selectedSize)
+                                                ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                                : 'bg-transparent border border-secondary text-secondary hover:bg-secondary hover:text-primary'
                                         }`}
-                                >
-                                    {justAdded ? (
-                                        <>
-                                            <Check size={20} />
-                                            ADDED TO CART!
-                                        </>
-                                    ) : isAdding ? (
-                                        'Adding...'
-                                    ) : (
-                                        <>
-                                            <ShoppingCart size={20} />
-                                            ADD TO CART
-                                        </>
-                                    )}
-                                </button>
+                                    >
+                                        {isOriginalInCart || justAdded ? (
+                                            <>
+                                                <Check size={18} /> ADDED TO CART!
+                                            </>
+                                        ) : isAdding ? (
+                                            'Adding...'
+                                        ) : (
+                                            <>
+                                                <ShoppingCart size={18} /> ADD TO CART
+                                            </>
+                                        )}
+                                    </button>
+
+                                    {/* Make Offer Button */}
+                                    <div className="text-center">
+                                        <button
+                                            onClick={handleMakeOffer}
+                                            className="underline text-secondary hover:text-secondary/80 transition-colors duration-300"
+                                        >
+                                            or make an offer
+                                        </button>
+                                    </div>
+                                </>
                             )}
                         </div>
 
@@ -186,6 +207,13 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
                     </div>
                 </div>
             </div>
+
+            <MakeOfferModal
+                isOpen={showOfferModal}
+                onClose={() => setShowOfferModal(false)}
+                artTitle={data.title?.[0]?.text || "Untitled"}
+                artPrice={data.amount || 0}
+            />
         </div>
     );
 };
