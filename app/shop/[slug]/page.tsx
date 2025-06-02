@@ -102,8 +102,8 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
                 </div>
 
                 <div className="grid grid-cols-1 items-center md:grid-cols-2 gap-10">
-                    <div>
-                        <PrismicNextImage field={data.image} className="w-full object-cover rounded-2xl" />
+                    <div className='w-full flex items-center justify-center'>
+                        <PrismicNextImage field={data.image} className="w-full object-cover rounded-2xl sm:w-[30rem] sm:h-[30rem] lg:w-[35rem] lg:h-[35rem]" />
                     </div>
 
                     <div className="space-y-4 flex flex-col items-center">

@@ -64,7 +64,7 @@ export default function Header() {
                     <AlignLeft />
                 </button>
 
-                <Link href="/" className="w-32 sm:w-44">
+                <Link href="/" className="w-32">
                     <Image src={logoPng} alt=""></Image>
                 </Link>
 

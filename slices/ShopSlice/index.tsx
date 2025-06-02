@@ -92,11 +92,11 @@ const ShopSlice: FC<ShopSliceProps> = ({ slice }) => {
           </button>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-10">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-10">
           {filteredProducts.map((item, index) => (
             <div key={`${item.slug}-${index}`}>
               <Link href={`/shop/${item.slug}`} className="flex flex-col items-center gap-1">
-                <div className="w-full overflow-hidden sm:lg-96 lg:h-96 sm:w-80 sm:h-80">
+                <div className="w-full overflow-hidden sm:w-80 sm:h-80">
                   <PrismicNextImage field={item.data.image} />
                 </div>
 

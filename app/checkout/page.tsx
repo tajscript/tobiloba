@@ -78,8 +78,8 @@ const CheckoutForm: React.FC = () => {
     setPaymentError(null);
 
     try {
-      // Create payment intent
-      const response = await fetch('/api/create-payment-intent', {
+      // Create payment
+      const response = await fetch('/api/create-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const CheckoutForm: React.FC = () => {
       const { clientSecret } = await response.json();
 
       if (!clientSecret) {
-        throw new Error('Failed to create payment intent');
+        throw new Error('Failed to create payment');
       }
 
       // Confirm payment
@@ -128,19 +128,19 @@ const CheckoutForm: React.FC = () => {
         setOrderComplete(true);
         clearCart();
         
-        // Send confirmation email (optional)
-        fetch('/api/send-confirmation', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            paymentIntentId: paymentIntent.id,
-            customerInfo,
-            items,
-            totalPrice
-          }),
-        }).catch(console.error);
+        // // Send confirmation email (optional)
+        // fetch('/api/send-confirmation', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     paymentIntentId: paymentIntent.id,
+        //     customerInfo,
+        //     items,
+        //     totalPrice
+        //   }),
+        // }).catch(console.error);
       }
     } catch (error) {
       console.error('Payment error:', error);
