@@ -197,7 +197,7 @@ const CheckoutForm: React.FC = () => {
     <div className="min-h-[70vh] bg-primary text-background">
       <div className="max-w-[1563px] mx-auto px-5 py-5 sm:p-10 lg:px-20">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex justify-between items-center gap-4 mb-8">
           <Link 
             href="/cart"
             className="flex items-center gap-2 text-secondary hover:underline"
@@ -205,7 +205,7 @@ const CheckoutForm: React.FC = () => {
             <ArrowLeft size={20} />
             Back to Cart
           </Link>
-          <h1 className="text-3xl font-bold text-secondary">Checkout</h1>
+          {/* <h1 className="text-xl font-bold text-secondary">Checkout</h1> */}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -315,7 +315,7 @@ const CheckoutForm: React.FC = () => {
             </div>
 
             {/* Payment Information */}
-            <div className="bg-background text-primary p-6 rounded-lg shadow-md">
+            {/* <div className="bg-background text-primary p-6 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <CreditCard size={20} />
                 Payment Information
@@ -347,7 +347,7 @@ const CheckoutForm: React.FC = () => {
                 <Lock size={16} />
                 Your payment information is secure and encrypted
               </div>
-            </div>
+            </div> */}
 
             {/* Place Order Button */}
             <button
