@@ -55,7 +55,7 @@ export default function Header() {
     return (
         <header className="h-20 sm:h-32 max-w-[1536px] mx-auto sm:flex flex-col sm:gap-4 w-full text-primary relative">
             <div className="flex justify-between items-center px-5 sm:px-10 lg:px-20 h-full sm:h-auto">
-                <div className="hidden sm:block">Login</div>
+                {/* <div className="hidden text-background sm:block">Login</div> */}
                 <button
                     className="sm:hidden text-primary cursor-pointer"
                     onClick={toggleMobileNav}
