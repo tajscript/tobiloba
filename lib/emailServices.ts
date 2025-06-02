@@ -52,7 +52,7 @@ export const sendNotificationEmail = async ({ type, data }: EmailData) => {
 
     const result = await resend.emails.send({
       from: 'Tobi The Artist <onboarding@resend.dev>',
-      to: 'adeyinkx20@gmail.com',
+      to: ['adeyinkx20@gmail.com', 'tobitheartist@gmail.com'],
       subject,
       html: htmlContent,
     });
