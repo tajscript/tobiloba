@@ -6,32 +6,23 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "slicemachine": "start-slicemachine"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@prismicio/client": "^7.17.2",
-    "@prismicio/next": "^2.0.1",
-    "@prismicio/react": "^3.2.1",
-    "@stripe/react-stripe-js": "^3.7.0",
-    "@stripe/stripe-js": "^7.3.0",
     "firebase": "^11.8.1",
     "lucide-react": "^0.511.0",
-    "next": "15.3.2",
+    "next": "^15.3.9",
     "nodemailer": "^7.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "resend": "^4.5.1",
-    "stripe": "^18.1.1"
+    "resend": "^4.5.1"
   },
   "devDependencies": {
-    "@slicemachine/adapter-next": "^0.3.77",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "slice-machine-ui": "^2.16.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

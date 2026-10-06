@@ -1,16 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore } from "firebase/firestore";
 
-
-const firebaseConfig = {
-  apiKey: "AIzaSyADJeIyrTm63oddB-8Nul6OposwMzRDeUg",
-  authDomain: "tobiadetimehin-bb367.firebaseapp.com",
-  projectId: "tobiadetimehin-bb367",
-  storageBucket: "tobiadetimehin-bb367.firebasestorage.app",
-  messagingSenderId: "197811884438",
-  appId: "1:197811884438:web:01e478e04dd5ad19754db7",
-  measurementId: "G-2G01KTWG75"
+export const firebaseConfig = {
+  apiKey: "AIzaSyDL1Zy3BiZfA5Ehcbk7kp7IhPh-wQ9p1Ns",
+  authDomain: "tobitheartist-5bd70.firebaseapp.com",
+  projectId: "tobitheartist-5bd70",
+  storageBucket: "tobitheartist-5bd70.firebasestorage.app",
+  messagingSenderId: "417509532418",
+  appId: "1:417509532418:web:4e0b15a51b4b95a1a4981b",
 };
 
 const app = initializeApp(firebaseConfig);

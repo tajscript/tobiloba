@@ -3,9 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
         remotePatterns: [
+      // Images uploaded from /admin (keep in sync with components/ArtImage.tsx)
       {
         protocol: 'https',
-        hostname: 'images.prismic.io',
+        hostname: 'res.cloudinary.com',
         pathname: '/**',
       },
     ],
