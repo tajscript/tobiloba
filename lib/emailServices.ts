@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface EmailData {
-  type: 'subscription' | 'contact' | 'offer';
+  type: 'subscription' | 'contact';
   data: any;
 }
 
@@ -36,18 +36,6 @@ export const sendNotificationEmail = async ({ type, data }: EmailData) => {
         `;
         break;
 
-      case 'offer':
-        subject = 'New Art Offer Received';
-        htmlContent = `
-          <h2>New Art Offer Received</h2>
-          <p><strong>Art Title:</strong> ${data.artTitle}</p>
-          <p><strong>Original Price:</strong> $${data.artPrice?.toLocaleString()}</p>
-          <p><strong>Offer Amount:</strong> $${Number(data.offer).toLocaleString()}</p>
-          <p><strong>Client Email:</strong> ${data.email}</p>
-          <p><strong>Location:</strong> ${data.region}, ${data.country}</p>
-          <p><strong>Submitted at:</strong> ${new Date().toLocaleString()}</p>
-        `;
-        break;
     }
 
     const result = await resend.emails.send({
@@ -56,6 +44,12 @@ export const sendNotificationEmail = async ({ type, data }: EmailData) => {
       subject,
       html: htmlContent,
     });
+
+    // Resend reports rejected sends in the result instead of throwing.
+    if (result.error) {
+      console.error('Email sending error:', result.error);
+      return { success: false, error: result.error };
+    }
 
     return { success: true, result };
   } catch (error) {

@@ -1,0 +1,41 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Admins are added by hand in the Firebase console: create a document in
+    // "admins" whose ID is the user's UID. Nobody can write here from the site.
+    match /admins/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow list, write: if false;
+    }
+
+    // Editable page content and artworks: public to read, admins to change.
+    match /content/{page} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /artworks/{slug} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Form submissions saved by the site's API routes.
+    match /subscriptions/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /contacts/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /offers/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

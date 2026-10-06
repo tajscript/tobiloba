@@ -2,8 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { AlignLeft, X, ShoppingCart, ChevronDown, Instagram, Twitter, Mail } from 'lucide-react';
-import CartIcon from '@/components/CartIcon';
+import { AlignLeft, X, ChevronDown, Instagram, Twitter, Mail } from 'lucide-react';
 import logoPng from "@/public/asset/logo.png"
 import Image from 'next/image';
 
@@ -54,10 +53,10 @@ export default function Header() {
 
     return (
         <header className="h-20 sm:h-32 max-w-[1536px] mx-auto sm:flex flex-col sm:gap-4 w-full text-primary relative">
-            <div className="flex justify-between items-center px-5 sm:px-10 lg:px-20 h-full sm:h-auto">
+            <div className="relative flex justify-center items-center px-5 sm:px-10 lg:px-20 h-full sm:h-auto">
                 {/* <div className="hidden text-background sm:block">Login</div> */}
                 <button
-                    className="sm:hidden text-primary cursor-pointer"
+                    className="sm:hidden absolute left-5 text-primary cursor-pointer"
                     onClick={toggleMobileNav}
                     aria-label="Open navigation menu"
                 >
@@ -67,10 +66,6 @@ export default function Header() {
                 <Link href="/" className="w-32">
                     <Image src={logoPng} alt=""></Image>
                 </Link>
-
-                <button className="flex flex-row items-center gap-2 text-primary">
-                    <CartIcon className="text-white" size={24} />
-                </button>
             </div>
 
             {/* Desktop Nav */}

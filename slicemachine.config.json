@@ -1,6 +1,0 @@
-{
-  "repositoryName": "tobiloba",
-  "adapter": "@slicemachine/adapter-next",
-  "libraries": ["./slices"],
-  "localSliceSimulatorURL": "http://localhost:3001/slice-simulator"
-}
