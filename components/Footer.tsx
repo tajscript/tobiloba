@@ -1,10 +1,10 @@
 "use client";
 
-import { Instagram, Mail, Twitter } from "lucide-react";
-import Link from "next/link";
+import SocialLinks from "@/components/SocialLinks";
+import type { SocialLink } from "@/lib/types";
 import { useState } from "react";
 
-export default function Footer() {
+export default function Footer({ socials }: { socials: SocialLink[] }) {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -77,11 +77,7 @@ export default function Footer() {
             </div>
 
             <div className="bg-primary w-full flex items-center justify-center flex-col text-background py-10 px-5 sm:px-10 lg:px-20">
-                <div className="flex flex-row gap-5 sm:gap-8 mb-5">
-                    <Link href="/"><Instagram className="w-8 h-8 sm:w-10 sm:h-10" /></Link>
-                    <Link href="/"><Twitter className="w-8 h-8 sm:w-10 sm:h-10"/></Link>
-                    <Link href="/"><Mail className="w-8 h-8 sm:w-10 sm:h-10" /></Link>
-                </div>
+                <SocialLinks links={socials} className="flex flex-row gap-5 sm:gap-8 mb-5" iconClassName="w-8 h-8 sm:w-10 sm:h-10" />
                 <p className="text-sm sm:text-base text-[#626161]">© 2025 Tobi Adetimehin. All rights reserved.</p>
             </div>
         </footer>

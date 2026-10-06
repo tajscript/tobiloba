@@ -113,6 +113,15 @@ export const PAGE_SCHEMAS: Record<ContentKey, PageSchema> = {
         ],
       },
       {
+        title: "Social links",
+        description: "The icons in the footer and the mobile menu. Leave a field empty to hide its icon.",
+        fields: [
+          { name: "instagramUrl", label: "Instagram", type: "text", hint: "For example instagram.com/yourname" },
+          { name: "twitterUrl", label: "Twitter / X", type: "text", hint: "For example x.com/yourname" },
+          { name: "contactEmail", label: "Email address", type: "text", hint: "The mail icon opens a new email to this address." },
+        ],
+      },
+      {
         title: "Search & sharing",
         fields: [
           { name: "metaTitle", label: "Site title", type: "text" },

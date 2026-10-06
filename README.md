@@ -13,7 +13,7 @@ Go to `/admin` and sign in.
 | About page | Portrait, biography, closing note |
 | Artworks | Add/edit/delete art, price, size, sold out, order, which paintings page and whether it is in the shop |
 | Paintings pages | Headings of the three paintings pages |
-| Site settings | The enquiry button on every artwork (Calendly link or email address), site title, description and sharing image |
+| Site settings | The enquiry button on every artwork (Calendly link or email address), social links, site title, description and sharing image |
 
 Saving publishes immediately.
 
