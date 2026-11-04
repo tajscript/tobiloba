@@ -7,7 +7,7 @@ import type { ContentKey } from "@/lib/types";
 export interface FieldDef {
   name: string;
   label: string;
-  type: "text" | "textarea" | "image";
+  type: "text" | "textarea" | "image" | "toggle";
   hint?: string;
   rows?: number;
 }
@@ -114,11 +114,16 @@ export const PAGE_SCHEMAS: Record<ContentKey, PageSchema> = {
       },
       {
         title: "Social links",
-        description: "The icons in the footer and the mobile menu. Leave a field empty to hide its icon.",
+        description: "The icons in the footer and the mobile menu. An icon only shows when its link is filled in and Show is ticked.",
         fields: [
           { name: "instagramUrl", label: "Instagram", type: "text", hint: "For example instagram.com/yourname" },
+          { name: "showInstagram", label: "Show Instagram", type: "toggle" },
           { name: "twitterUrl", label: "Twitter / X", type: "text", hint: "For example x.com/yourname" },
+          { name: "showTwitter", label: "Show Twitter / X", type: "toggle" },
+          { name: "tiktokUrl", label: "TikTok", type: "text", hint: "For example tiktok.com/@yourname" },
+          { name: "showTiktok", label: "Show TikTok", type: "toggle" },
           { name: "contactEmail", label: "Email address", type: "text", hint: "The mail icon opens a new email to this address." },
+          { name: "showEmail", label: "Show email", type: "toggle" },
         ],
       },
       {

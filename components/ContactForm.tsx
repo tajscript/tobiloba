@@ -1,8 +1,8 @@
 "use client";
 
-import { Instagram, Mail, Twitter } from "lucide-react"
-import Link from "next/link"
 import React, { useState } from "react";
+import SocialLinks from "@/components/SocialLinks";
+import type { SocialLink } from "@/lib/types";
 
 interface FormData {
   firstName: string;
@@ -12,7 +12,7 @@ interface FormData {
   receiveNewsletters: string;
 }
 
-const page = () => {
+const ContactForm = ({ socials }: { socials: SocialLink[] }) => {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -75,11 +75,7 @@ const page = () => {
     <div className="bg-primary text-background">
       <div className="flex flex-col sm:flex-row items-center justify-center gap-10 mx-auto max-w-[1563px] py-16 px-5 sm:px-10 lg:p-20">
         <div className="w-full sm:w-1/2 flex flex-col items-center">
-          <div className="flex flex-row gap-5 sm:gap-8 mb-5">
-            <Link href="/"><Instagram className="w-8 h-8" /></Link>
-            <Link href="/"><Twitter className="w-8 h-8" /></Link>
-            <Link href="/"><Mail className="w-8 h-8" /></Link>
-          </div>
+          <SocialLinks links={socials} className="flex flex-row gap-5 sm:gap-8 mb-5" iconClassName="w-8 h-8" />
 
           <p className="text-sm text-center sm:text-base sm:text-start">Looking to discuss a project or inquire about a piece? <br className="hidden sm:block" />
             Fill this, and I will get back to you in within 24 hours.</p>
@@ -202,4 +198,4 @@ const page = () => {
   )
 }
 
-export default page
+export default ContactForm

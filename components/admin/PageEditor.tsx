@@ -13,12 +13,13 @@ import {
   SAVED_MESSAGE,
   SAVED_PENDING_MESSAGE,
   SaveBar,
+  Toggle,
   buttonClass,
   inputClass,
 } from "@/components/admin/fields";
 import { useUnsavedWarning } from "@/components/admin/useUnsavedWarning";
 
-type Values = Record<string, string | ImageValue>;
+type Values = Record<string, string | boolean | ImageValue>;
 
 export default function PageEditor({ pageKey }: { pageKey: ContentKey }) {
   const schema = PAGE_SCHEMAS[pageKey];
@@ -38,7 +39,7 @@ export default function PageEditor({ pageKey }: { pageKey: ContentKey }) {
       .catch((error) => setMessage({ tone: "error", text: describeError(error) }));
   }, [pageKey]);
 
-  const update = (name: string, value: string | ImageValue) => {
+  const update = (name: string, value: string | boolean | ImageValue) => {
     setValues((current) => (current ? { ...current, [name]: value } : current));
     setDirty(true);
     setMessage(null);
@@ -82,6 +83,14 @@ export default function PageEditor({ pageKey }: { pageKey: ContentKey }) {
                       hint={field.hint}
                       value={values[field.name] as ImageValue}
                       onChange={(value) => update(field.name, value)}
+                    />
+                  ) : field.type === "toggle" ? (
+                    <Toggle
+                      key={field.name}
+                      label={field.label}
+                      hint={field.hint}
+                      checked={values[field.name] !== false}
+                      onChange={(checked) => update(field.name, checked)}
                     />
                   ) : (
                     <Field key={field.name} label={field.label} hint={field.hint}>
