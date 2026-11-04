@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileText, Home, Images, Palette, Settings } from "lucide-react";
+import { FileText, Home, Images, Mail, Palette, Settings } from "lucide-react";
 
 const SECTIONS = [
   { href: "/admin/pages/home", icon: Home, title: "Home page", text: "Hero image, introduction and featured work." },
@@ -7,6 +7,7 @@ const SECTIONS = [
   { href: "/admin/artworks", icon: Palette, title: "Artworks", text: "Add art, set prices, mark pieces as sold." },
   { href: "/admin/pages/galleries", icon: Images, title: "Paintings pages", text: "Headings for the three paintings pages." },
   { href: "/admin/pages/settings", icon: Settings, title: "Site settings", text: "Enquiry button, social links, site title and sharing image." },
+  { href: "/admin/subscribers", icon: Mail, title: "Subscribers", text: "Newsletter sign-ups: see, download or remove them." },
 ];
 
 export default function AdminHome() {

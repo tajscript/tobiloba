@@ -11,7 +11,7 @@ import {
   signOut,
   type User,
 } from "firebase/auth";
-import { ExternalLink, FileText, Home, Images, LayoutDashboard, LogOut, Palette, Settings } from "lucide-react";
+import { ExternalLink, FileText, Home, Images, LayoutDashboard, LogOut, Mail, Palette, Settings } from "lucide-react";
 import logoPng from "@/public/asset/logo.png";
 import { auth } from "@/lib/firebaseClient";
 import { describeError, initializeStore, isAdmin } from "@/lib/adminApi";
@@ -24,6 +24,7 @@ const NAV = [
   { href: "/admin/artworks", label: "Artworks", icon: Palette },
   { href: "/admin/pages/galleries", label: "Paintings pages", icon: Images },
   { href: "/admin/pages/settings", label: "Site settings", icon: Settings },
+  { href: "/admin/subscribers", label: "Subscribers", icon: Mail },
 ];
 
 type Status = "loading" | "signed-out" | "not-admin" | "ready";

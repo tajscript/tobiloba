@@ -1,15 +1,17 @@
 // lib/emailService.ts
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Created on first use so a build without RESEND_API_KEY doesn't fail.
+let client: Resend | null = null;
+function resend() {
+  client ??= new Resend(process.env.RESEND_API_KEY);
+  return client;
+}
 
-// Resend's shared onboarding@resend.dev sender can only deliver to the email
-// address that owns the Resend account; any other recipient makes the whole
-// send fail. Once a domain is verified in Resend, set EMAIL_FROM to an address
-// on it (e.g. "Tobi The Artist <hello@tobiadetimehin.com>").
-const FROM = process.env.EMAIL_FROM || 'Tobi The Artist <onboarding@resend.dev>';
+// The sender must be on a domain verified in Resend (tobiadetimehin.com is).
+const FROM = process.env.EMAIL_FROM || 'Tobi The Artist <hello@tobiadetimehin.com>';
 // Comma-separated list of who gets notified.
-const TO = (process.env.EMAIL_TO || 'adeyinkx20@gmail.com,tobitheartist@gmail.com')
+const TO = (process.env.EMAIL_TO || 'hello@tobiadetimehin.com')
   .split(',')
   .map((address) => address.trim())
   .filter(Boolean);
@@ -59,7 +61,7 @@ export const sendNotificationEmail = async ({ type, data }: EmailData) => {
 
     }
 
-    const result = await resend.emails.send({
+    const result = await resend().emails.send({
       from: FROM,
       to: TO,
       replyTo,
@@ -79,3 +81,47 @@ export const sendNotificationEmail = async ({ type, data }: EmailData) => {
     return { success: false, error };
   }
 };
+
+// Newsletter subscribers are also kept as contacts in a Resend audience so
+// newsletters can be sent from Resend (Broadcasts), which adds the unsubscribe
+// link. Uses RESEND_AUDIENCE_ID if set, otherwise the account's first audience.
+let audienceId: string | null = process.env.RESEND_AUDIENCE_ID || null;
+
+async function newsletterAudience() {
+  if (audienceId) return audienceId;
+  const { data, error } = await resend().audiences.list();
+  if (error) throw new Error(error.message);
+  audienceId = data?.data[0]?.id ?? null;
+  if (!audienceId) throw new Error('No audience found in Resend');
+  return audienceId;
+}
+
+/** Adds an address to the Resend newsletter audience. Returns false if Resend refused it. */
+export async function addToNewsletter(email: string) {
+  try {
+    const { error } = await resend().contacts.create({ audienceId: await newsletterAudience(), email, unsubscribed: false });
+    if (error) {
+      console.error('Resend contact error:', error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Resend contact error:', error);
+    return false;
+  }
+}
+
+/** Removes an address from the Resend newsletter audience. */
+export async function removeFromNewsletter(email: string) {
+  try {
+    const { error } = await resend().contacts.remove({ audienceId: await newsletterAudience(), email });
+    if (error && error.name !== 'not_found') {
+      console.error('Resend contact error:', error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Resend contact error:', error);
+    return false;
+  }
+}

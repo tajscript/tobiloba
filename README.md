@@ -14,6 +14,7 @@ Go to `/admin` and sign in.
 | Artworks | Add/edit/delete art, price, size, sold out, order, which paintings page and whether it is in the shop |
 | Paintings pages | Headings of the three paintings pages |
 | Site settings | The enquiry button on every artwork (Calendly link or email address), social links (with a show/hide switch for each), site title, description and sharing image |
+| Subscribers | Everyone on the newsletter list: download it, remove people, or copy them all to Resend |
 
 Saving publishes immediately.
 
@@ -43,9 +44,12 @@ Environment variables: `RESEND_API_KEY`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_AP
 ## Form emails
 
 Contact messages and newsletter sign-ups are saved in Firestore (`contacts`, `subscriptions`) and emailed to the
-addresses in `EMAIL_TO` (comma-separated). Resend's default sender, `onboarding@resend.dev`, only delivers to the
-email address that owns the Resend account. To email anyone else, verify the site's domain at resend.com/domains
-and set `EMAIL_FROM` to an address on it, e.g. `Tobi The Artist <hello@tobiadetimehin.com>`.
+addresses in `EMAIL_TO` (comma-separated, default `hello@tobiadetimehin.com`). They are sent from `EMAIL_FROM`
+(default `Tobi The Artist <hello@tobiadetimehin.com>`), which must be on a domain verified at resend.com/domains.
+
+Each subscriber is stored once, as `subscriptions/{email}`, and added to the first audience in Resend (or
+`RESEND_AUDIENCE_ID`). Newsletters are written and sent from Resend under Broadcasts, which handles unsubscribes.
+Ticking "yes" on the contact form also makes someone a subscriber.
 
 To make another piece of text or image editable, add it to the page's type and defaults in `lib/types.ts`,
 list it in `lib/adminSchema.ts`, and render it on the page.

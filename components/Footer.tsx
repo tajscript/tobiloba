@@ -8,6 +8,7 @@ export default function Footer({ socials }: { socials: SocialLink[] }) {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [succeeded, setSucceeded] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,6 +20,7 @@ export default function Footer({ socials }: { socials: SocialLink[] }) {
 
         setLoading(true);
         setMessage("");
+        setSucceeded(false);
 
         try {
             const response = await fetch('/api/suscribe-newsletter', {
@@ -32,7 +34,10 @@ export default function Footer({ socials }: { socials: SocialLink[] }) {
             const data = await response.json();
 
             if (data.success) {
-                setMessage("Successfully subscribed! Thank you for joining our newsletter.");
+                setSucceeded(true);
+                setMessage(data.alreadySubscribed
+                    ? "You're already subscribed. Thank you!"
+                    : "Successfully subscribed! Thank you for joining our newsletter.");
                 setEmail("");
             } else {
                 setMessage(data.error || "Failed to subscribe. Please try again.");
@@ -70,7 +75,7 @@ export default function Footer({ socials }: { socials: SocialLink[] }) {
                 </form>
                 
                 {message && (
-                    <p className={`mt-4 text-sm text-center ${message.includes('Successfully') ? 'text-secondary' : 'text-red-600'}`}>
+                    <p className={`mt-4 text-sm text-center ${succeeded ? 'text-secondary' : 'text-red-600'}`}>
                         {message}
                     </p>
                 )}

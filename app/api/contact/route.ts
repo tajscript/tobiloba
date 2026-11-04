@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { sendNotificationEmail } from '@/lib/emailServices';
+import { normalizeEmail, subscribe } from '@/lib/subscribers';
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,6 +40,13 @@ export async function POST(request: NextRequest) {
 
     if (!saved && !emailed.success) {
       return NextResponse.json({ error: 'Failed to send message' }, { status: 500 });
+    }
+
+    // Opting in on the contact form makes them a newsletter subscriber. The
+    // contact email already tells Tobi, so no separate sign-up email is sent.
+    const subscriberEmail = normalizeEmail(email);
+    if (receiveNewsletters === 'yes' && subscriberEmail) {
+      await subscribe(subscriberEmail, 'contact form', false);
     }
 
     return NextResponse.json({ 

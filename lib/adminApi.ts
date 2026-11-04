@@ -8,6 +8,7 @@ import {
   getDocs,
   serverTimestamp,
   setDoc,
+  updateDoc,
   writeBatch,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -166,4 +167,91 @@ export function describeError(error: unknown) {
   if (code.includes("too-many-requests")) return "Too many attempts. Please wait a few minutes and try again.";
   if (code.includes("network")) return "Network problem. Check your connection and try again.";
   return error instanceof Error ? error.message : "Something went wrong. Please try again.";
+}
+
+export interface Subscriber {
+  email: string;
+  subscribedAt: Date | null;
+  source: string;
+  /** Every Firestore document that makes this address a subscriber. */
+  refs: { collection: "subscriptions" | "contacts"; id: string }[];
+}
+
+function toDate(value: unknown) {
+  return value && typeof (value as { toDate?: unknown }).toDate === "function" ? (value as { toDate: () => Date }).toDate() : null;
+}
+
+/**
+ * Everyone on the newsletter list: footer sign-ups plus contact-form senders
+ * who ticked "yes", one row per address, newest first.
+ */
+export async function listSubscribers(): Promise<Subscriber[]> {
+  const [subscriptions, contacts] = await Promise.all([
+    getDocs(collection(db, "subscriptions")),
+    getDocs(collection(db, "contacts")),
+  ]);
+
+  const byEmail = new Map<string, Subscriber>();
+  const add = (email: unknown, at: Date | null, source: string, ref: Subscriber["refs"][number]) => {
+    const key = String(email ?? "").trim().toLowerCase();
+    if (!key) return;
+    const existing = byEmail.get(key);
+    if (!existing) {
+      byEmail.set(key, { email: key, subscribedAt: at, source, refs: [ref] });
+      return;
+    }
+    existing.refs.push(ref);
+    if (at && (!existing.subscribedAt || at < existing.subscribedAt)) {
+      existing.subscribedAt = at;
+      existing.source = source;
+    }
+  };
+
+  subscriptions.forEach((snap) => {
+    const data = snap.data();
+    add(data.email, toDate(data.subscribedAt), data.source === "contact form" ? "Contact form" : "Newsletter", { collection: "subscriptions", id: snap.id });
+  });
+  contacts.forEach((snap) => {
+    const data = snap.data();
+    if (data.receiveNewsletters === "yes") {
+      add(data.email, toDate(data.submittedAt), "Contact form", { collection: "contacts", id: snap.id });
+    }
+  });
+
+  return [...byEmail.values()].sort((a, b) => (b.subscribedAt?.getTime() ?? 0) - (a.subscribedAt?.getTime() ?? 0));
+}
+
+async function subscribersApi(method: "POST" | "DELETE", body: unknown) {
+  const token = await auth.currentUser?.getIdToken();
+  const res = await fetch("/api/admin/subscribers", {
+    method,
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Resend could not be updated. Please try again.");
+  return data;
+}
+
+/** Takes someone off the list here and in Resend. Their contact messages are kept. */
+export async function removeSubscriber(subscriber: Subscriber) {
+  await Promise.all(
+    subscriber.refs.map((ref) =>
+      ref.collection === "subscriptions"
+        ? deleteDoc(doc(db, "subscriptions", ref.id))
+        : updateDoc(doc(db, "contacts", ref.id), { receiveNewsletters: "no" })
+    )
+  );
+  await subscribersApi("DELETE", { email: subscriber.email });
+}
+
+/** Adds every address to the Resend audience, a few at a time. Reports progress as a count. */
+export async function copySubscribersToResend(emails: string[], onProgress?: (done: number) => void) {
+  let added = 0;
+  for (let i = 0; i < emails.length; i += 10) {
+    const result = await subscribersApi("POST", { emails: emails.slice(i, i + 10) });
+    added += result.added;
+    onProgress?.(Math.min(i + 10, emails.length));
+  }
+  return { added, failed: emails.length - added };
 }
