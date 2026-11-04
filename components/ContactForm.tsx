@@ -18,7 +18,7 @@ const ContactForm = ({ socials }: { socials: SocialLink[] }) => {
     lastName: "",
     email: "",
     message: "",
-    receiveNewsletters: "no",
+    receiveNewsletters: "yes",
   });
 
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ const ContactForm = ({ socials }: { socials: SocialLink[] }) => {
           lastName: "",
           email: "",
           message: "",
-          receiveNewsletters: "no",
+          receiveNewsletters: "yes",
         });
       } else {
         setSubmitMessage(data.error || "Failed to send message. Please try again.");
