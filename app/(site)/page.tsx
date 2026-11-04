@@ -12,7 +12,7 @@ export default async function Page() {
   return (
     <>
       <section className="mx-auto max-w-[1536px] lg:px-20">
-        <ArtImage image={home.heroImage} priority sizes="100vw" className="object-cover h-[80vh] lg:h-[90vh] lg:object-top sm:mt-5 mx-auto" />
+        <ArtImage image={home.heroImage} priority sizes="100vw" className="h-auto w-auto max-w-full max-h-[calc(100svh-6rem)] sm:max-h-[calc(100svh-10.5rem)] sm:mt-5 mx-auto" />
       </section>
 
       <section className="pt-20 pb-28 max-w-[1536px] mx-auto px-5 sm:px-10 lg:px-20 flex flex-col items-center justify-center">
