@@ -2,11 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { AlignLeft, X, ChevronDown, Instagram, Twitter, Mail } from 'lucide-react';
+import { AlignLeft, X, ChevronDown } from 'lucide-react';
+import SocialLinks from '@/components/SocialLinks';
+import type { SocialLink } from '@/lib/types';
 import logoPng from "@/public/asset/logo.png"
 import Image from 'next/image';
 
-export default function Header() {
+export default function Header({ socials }: { socials: SocialLink[] }) {
     // State for mobile navigation
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -151,11 +153,7 @@ export default function Header() {
                     <Link href="/contact" onClick={handleLinkClick}>CONTACT</Link>
                     <Link href="/shop" onClick={handleLinkClick} className="border border-secondary text-secondary px-8 py-1.5 rounded-full">SHOP</Link>
 
-                    <div className="flex flex-row gap-5 mt-10">
-                        <Link href="/" onClick={handleLinkClick}><Instagram /></Link>
-                        <Link href="/" onClick={handleLinkClick}><Twitter /></Link>
-                        <Link href="/" onClick={handleLinkClick}><Mail /></Link>
-                    </div>
+                    <SocialLinks links={socials} onClick={handleLinkClick} className="flex flex-row gap-5 mt-10" />
                 </div>
             </nav>
         </header>

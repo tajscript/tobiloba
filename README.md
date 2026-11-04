@@ -13,7 +13,7 @@ Go to `/admin` and sign in.
 | About page | Portrait, biography, closing note |
 | Artworks | Add/edit/delete art, price, size, sold out, order, which paintings page and whether it is in the shop |
 | Paintings pages | Headings of the three paintings pages |
-| Site settings | The enquiry button on every artwork (Calendly link or email address), site title, description and sharing image |
+| Site settings | The enquiry button on every artwork (Calendly link or email address), social links (with a show/hide switch for each), site title, description and sharing image |
 
 Saving publishes immediately.
 
@@ -38,7 +38,14 @@ npm run dev
 ```
 
 Environment variables: `RESEND_API_KEY`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`,
-`CLOUDINARY_API_SECRET`.
+`CLOUDINARY_API_SECRET`, and optionally `EMAIL_FROM` and `EMAIL_TO` for the form notification emails.
+
+## Form emails
+
+Contact messages and newsletter sign-ups are saved in Firestore (`contacts`, `subscriptions`) and emailed to the
+addresses in `EMAIL_TO` (comma-separated). Resend's default sender, `onboarding@resend.dev`, only delivers to the
+email address that owns the Resend account. To email anyone else, verify the site's domain at resend.com/domains
+and set `EMAIL_FROM` to an address on it, e.g. `Tobi The Artist <hello@tobiadetimehin.com>`.
 
 To make another piece of text or image editable, add it to the page's type and defaults in `lib/types.ts`,
 list it in `lib/adminSchema.ts`, and render it on the page.

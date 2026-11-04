@@ -39,10 +39,10 @@ export default function Gallery({ title, artworks, enquiryLabel, enquiryLink }: 
                     image={art.image}
                     alt={art.image.alt || art.title}
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="h-[22rem] w-full lg:h-96 object-cover"
+                    className="aspect-[4/5] w-full object-contain"
                   />
                 ) : (
-                  <div className="h-[22rem] w-full lg:h-96 bg-gray-300 flex items-center justify-center">
+                  <div className="aspect-[4/5] w-full bg-gray-300 flex items-center justify-center">
                     <span className="text-gray-600">No Image</span>
                   </div>
                 )}
@@ -68,7 +68,7 @@ export default function Gallery({ title, artworks, enquiryLabel, enquiryLink }: 
                 image={selectedArt.image}
                 alt={selectedArt.image.alt || selectedArt.title}
                 sizes="28rem"
-                className="w-full h-64 object-cover rounded my-4"
+                className="w-full max-h-[50vh] object-contain my-4"
               />
             )}
 

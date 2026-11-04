@@ -45,6 +45,15 @@ export interface SettingsContent {
   enquiryLabel: string;
   /** Where that button leads: a booking page such as Calendly, or an email address. */
   enquiryLink: string;
+  /** Social icons in the footer and mobile menu. An icon is hidden while its field is empty or its switch is off. */
+  instagramUrl: string;
+  twitterUrl: string;
+  tiktokUrl: string;
+  contactEmail: string;
+  showInstagram: boolean;
+  showTwitter: boolean;
+  showTiktok: boolean;
+  showEmail: boolean;
 }
 
 export interface ContentMap {
@@ -101,6 +110,29 @@ export function enquiryTarget(link: string | undefined, artTitle: string): { hre
   return { href: /^https?:\/\//i.test(value) ? value : `https://${value.replace(/^\/+/, "")}`, external: true };
 }
 
+export interface SocialLink {
+  kind: "instagram" | "twitter" | "tiktok" | "email";
+  href: string;
+}
+
+function webAddress(value: string) {
+  const url = value.trim();
+  if (!url) return "";
+  return /^https?:\/\//i.test(url) ? url : `https://${url.replace(/^\/+/, "")}`;
+}
+
+/** The social icons to show, in order, leaving out any the admin hasn't filled in. */
+export function socialLinks(settings: SettingsContent): SocialLink[] {
+  const email = (settings.contactEmail ?? "").trim().replace(/^mailto:/i, "");
+  const links: (SocialLink & { show: boolean })[] = [
+    { kind: "instagram", href: webAddress(settings.instagramUrl ?? ""), show: settings.showInstagram },
+    { kind: "twitter", href: webAddress(settings.twitterUrl ?? ""), show: settings.showTwitter },
+    { kind: "tiktok", href: webAddress(settings.tiktokUrl ?? ""), show: settings.showTiktok },
+    { kind: "email", href: email ? `mailto:${email}` : "", show: settings.showEmail },
+  ];
+  return links.filter((link) => link.href && link.show !== false).map(({ kind, href }) => ({ kind, href }));
+}
+
 export const EMPTY_IMAGE: ImageValue = { url: "", alt: "" };
 
 export function slugify(text: string) {
@@ -148,6 +180,14 @@ export const DEFAULT_CONTENT: ContentMap = {
     metaImage: { url: "/asset/artist.png", alt: "Tobi's picture", width: 370, height: 427 },
     enquiryLabel: "ENQUIRE",
     enquiryLink: "",
+    instagramUrl: "",
+    twitterUrl: "",
+    tiktokUrl: "",
+    contactEmail: "tobitheartist@gmail.com",
+    showInstagram: true,
+    showTwitter: true,
+    showTiktok: true,
+    showEmail: true,
   },
 };
 

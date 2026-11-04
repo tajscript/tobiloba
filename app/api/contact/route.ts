@@ -22,18 +22,29 @@ export async function POST(request: NextRequest) {
       status: 'new'
     };
 
-    const docRef = await addDoc(collection(db, 'contacts'), contactData);
+    // Save and notify independently: the message has arrived if either one works.
+    const [saved, emailed] = await Promise.all([
+      addDoc(collection(db, 'contacts'), contactData).then(
+        (docRef) => docRef.id,
+        (error) => {
+          console.error('Contact form save error:', error);
+          return null;
+        }
+      ),
+      sendNotificationEmail({
+        type: 'contact',
+        data: { firstName, lastName, email, message, receiveNewsletters }
+      }),
+    ]);
 
-    // Send notification email
-    await sendNotificationEmail({
-      type: 'contact',
-      data: { firstName, lastName, email, message, receiveNewsletters }
-    });
+    if (!saved && !emailed.success) {
+      return NextResponse.json({ error: 'Failed to send message' }, { status: 500 });
+    }
 
     return NextResponse.json({ 
       success: true, 
       message: 'Message sent successfully!',
-      id: docRef.id 
+      id: saved 
     });
     
   } catch (error) {

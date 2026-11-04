@@ -6,7 +6,7 @@ const SECTIONS = [
   { href: "/admin/pages/about", icon: FileText, title: "About page", text: "Portrait, biography and closing note." },
   { href: "/admin/artworks", icon: Palette, title: "Artworks", text: "Add art, set prices, mark pieces as sold." },
   { href: "/admin/pages/galleries", icon: Images, title: "Paintings pages", text: "Headings for the three paintings pages." },
-  { href: "/admin/pages/settings", icon: Settings, title: "Site settings", text: "Enquiry button, site title, description and sharing image." },
+  { href: "/admin/pages/settings", icon: Settings, title: "Site settings", text: "Enquiry button, social links, site title and sharing image." },
 ];
 
 export default function AdminHome() {

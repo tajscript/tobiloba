@@ -23,7 +23,7 @@ const ProductDetail = ({ artwork, enquiryLabel, enquiryLink }: ProductDetailProp
 
                 <div className="grid grid-cols-1 items-center md:grid-cols-2 gap-10">
                     <div className='w-full flex items-center justify-center'>
-                        <ArtImage image={artwork.image} alt={artwork.image.alt || artwork.title} priority sizes="(min-width: 768px) 50vw, 100vw" className="w-full object-cover rounded-2xl sm:w-[30rem] sm:h-[30rem] lg:w-[35rem] lg:h-[35rem]" />
+                        <ArtImage image={artwork.image} alt={artwork.image.alt || artwork.title} priority sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[4/5] w-full object-contain sm:w-[26rem] lg:w-[30rem]" />
                     </div>
 
                     <div className="space-y-4 flex flex-col items-center">

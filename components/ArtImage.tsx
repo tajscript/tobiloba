@@ -1,4 +1,6 @@
-import Image from "next/image";
+"use client";
+
+import Image, { type ImageLoaderProps } from "next/image";
 import type { ImageValue } from "@/lib/types";
 
 // Hosts next/image is allowed to optimise (keep in sync with next.config.ts).
@@ -11,6 +13,19 @@ function canOptimize(url: string) {
   } catch {
     return false;
   }
+}
+
+function isCloudinary(url: string) {
+  return url.startsWith("https://res.cloudinary.com/") && url.includes("/image/upload/");
+}
+
+/**
+ * Asks Cloudinary for a resized copy instead of sending the original through
+ * the Next.js optimiser. Some uploads are 90+ megapixels; the optimiser times
+ * out fetching those and the browser ends up decoding the full file.
+ */
+function cloudinaryLoader({ src, width, quality }: ImageLoaderProps) {
+  return src.replace("/image/upload/", `/image/upload/f_auto,q_${quality ?? "auto"},c_limit,w_${width}/`);
 }
 
 interface ArtImageProps {
@@ -35,7 +50,16 @@ export default function ArtImage({ image, alt, className, sizes, priority }: Art
 
   if (w && h && canOptimize(value.url)) {
     return (
-      <Image src={value.url} alt={altText} width={w} height={h} sizes={sizes} priority={priority} className={className} />
+      <Image
+        src={value.url}
+        alt={altText}
+        width={w}
+        height={h}
+        sizes={sizes}
+        priority={priority}
+        loader={isCloudinary(value.url) ? cloudinaryLoader : undefined}
+        className={className}
+      />
     );
   }
 
