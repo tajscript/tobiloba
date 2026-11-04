@@ -78,7 +78,7 @@ export default function Footer({ socials }: { socials: SocialLink[] }) {
 
             <div className="bg-primary w-full flex items-center justify-center flex-col text-background py-10 px-5 sm:px-10 lg:px-20">
                 <SocialLinks links={socials} className="flex flex-row gap-5 sm:gap-8 mb-5" iconClassName="w-8 h-8 sm:w-10 sm:h-10" />
-                <p className="text-sm sm:text-base text-[#626161]">© 2025 Tobi Adetimehin. All rights reserved.</p>
+                <p className="text-sm sm:text-base text-[#626161]">© {new Date().getFullYear()} Tobi Adetimehin. All rights reserved.</p>
             </div>
         </footer>
     )
